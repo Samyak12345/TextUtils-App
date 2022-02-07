@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import './App.css';
-//import About from './components/About';
+import About from './components/About';
 import Alert from './components/Alert';
 import Navbar from './components/Navbar';
 import TextForm from './components/TextForm';
 import PropTypes from 'prop-types'
-// import{
-//   BrowserRouter as Router,
-//   Switch,
-//   Route,
-//   Link
-// } from "react-router-dom";
+import{
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 
 function App() {
@@ -27,7 +27,18 @@ function App() {
       },2000);
   }
 
-  const toggleMode = () =>{
+  const removeBodyClasses = () =>{
+    document.body.classList.remove('bg-light')
+    document.body.classList.remove('bg-dark')
+    document.body.classList.remove('bg-warning')
+    document.body.classList.remove('bg-danger')
+    document.body.classList.remove('bg-success')
+  }
+
+  const toggleMode = (cls) =>{
+    removeBodyClasses();
+    document.body.classList.add('bg-'+ cls)
+
     if(mode === 'light'){
       setMode('dark');
       document.body.style.background = "grey";
@@ -53,21 +64,21 @@ function App() {
 
   return (
     <>
-      {/* <Router>   */}
+      <Router>  
       <Navbar title="TextUtils33" mode={mode} toggleMode ={toggleMode}/>
       <Alert alert={alert}/>
       <div className="container my-3">
 
-      {/* <Switch>
+      <Switch>
           <Route exact path="/about">
-            <About />
-          </Route> */}
-          {/* <Route exact path="/"> */}
+            <About mode={mode} />
+          </Route>
+          <Route exact path="/">
           <TextForm showAlert = {showAlert} heading="Enter the text to analyze below" mode={mode} />
-          {/* </Route> */}
-      {/* </Switch> */}
+          </Route>
+      </Switch>
       </div>
-      {/* </Router> */}
+      </Router>
     </>
   );
 }
